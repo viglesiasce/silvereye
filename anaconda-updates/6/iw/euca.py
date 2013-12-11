@@ -63,8 +63,7 @@ def vtCheck(anaconda):
   
     while 1:
         buttons = [_("_Exit"),]
-        if flags.debug: 
-            buttons.append(_("_Install anyway"))
+        buttons.append(_("_Install anyway"))
         rc = anaconda.intf.messageWindow( _("Warning! Virtualization not supported"),
                                       _("It appears that this system's CPUs do not "
                                         "support virtualization, or that this feature"

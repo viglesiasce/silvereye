@@ -67,6 +67,11 @@ class InstallClass(silvereye.InstallClass):
 # Set the default Eucalyptus networking mode
 sed -i -e 's/^VNET_MODE=\"SYSTEM\"/VNET_MODE=\"MANAGED-NOVLAN"/' /etc/eucalyptus/eucalyptus.conf
 
+CPU_MODEL=$(egrep -m1 -w '^flags[[:blank:]]*:' /proc/cpuinfo | egrep -wo '(vmx|svm)')
+if [ "$CPU_MODEL" == "" ]; then
+    sed -i -e 's/^HYPERVISOR=.*/HYPERVISOR="qemu"/' /etc/eucalyptus/eucalyptus.conf
+fi
+
 # Disable Eucalyptus services before first boot
 /sbin/chkconfig eucalyptus-nc off
 
