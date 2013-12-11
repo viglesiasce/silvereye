@@ -560,10 +560,10 @@ class SilvereyeBuilder(yum.YumBase):
 
     # Install/configure CentOS repos
     if repoMap.has_key('centos'):
-      self.setupRepo('base', baseurl='%s/%s/os/%s' % (repoMap['centos'], 
+      self.setupRepo('base', baseurl='%s/6.4/os/%s' % (repoMap['centos'], 
                      self.distroversion, self.conf.yumvar['basearch']),
                      ignoreHostCfg=True)
-      self.setupRepo('updates', baseurl='%s/%s/updates/%s' % (repoMap['centos'], 
+      self.setupRepo('updates', baseurl='%s/6.4/updates/%s' % (repoMap['centos'], 
                      self.distroversion, self.conf.yumvar['basearch']),
                      ignoreHostCfg=True)
     # ...else we just keep the defaults
