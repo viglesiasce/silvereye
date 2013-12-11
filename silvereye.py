@@ -654,7 +654,7 @@ class SilvereyeBuilder(yum.YumBase):
     # Useful tools
     rpms.update(['tcpdump', 'strace', 'man'])
 
-    if self.distroversion == "6":
+    if self.distroversion == "6.4":
       rpms.update(['ntpdate', 'libvirt-client', 'elrepo-release', 
                    'iwl6000g2b-firmware', 'sysfsutils'])
 
@@ -667,7 +667,7 @@ class SilvereyeBuilder(yum.YumBase):
     if self.conf.yumvar['basearch'] == 'x86_64':
       self.conf.exclude.append('*.i?86')
     self.conf.assumeyes = 1
-    if self.distroversion == "6":
+    if self.distroversion == "6.4":
       self.conf.releasever = self.distroversion
       self.conf.plugins=1
     yumconf = os.path.join(self.builddir, 'yum.conf')
@@ -715,7 +715,7 @@ class SilvereyeBuilder(yum.YumBase):
                      '-c', yumconf,
                      '--resolve', '--installroot', self.builddir,
                      '--destdir', self.imgdir, '--splitbyrepo',
-                     '--releasever', '6' ] + list(rpms),
+                     '--releasever', '6.4' ] + list(rpms),
                       stdout=self.cmdout, stderr=self.cmdout) 
 
     # Call again to dep close Packages dir from 6.3 base
@@ -724,7 +724,7 @@ class SilvereyeBuilder(yum.YumBase):
                      '--disablerepo', 'updates',
                      '--resolve', '--installroot', self.builddir,
                      '--destdir', self.imgdir, '--splitbyrepo',
-                     '--releasever', '6' ] + list(rpms),
+                     '--releasever', '6.4' ] + list(rpms),
                       stdout=self.cmdout, stderr=self.cmdout) 
 
   # Create a repository
