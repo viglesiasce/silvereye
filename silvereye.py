@@ -730,13 +730,6 @@ class SilvereyeBuilder(yum.YumBase):
   # Create a repository
   def createRepo(self):
     compsfile = os.path.join(self.builddir, 'comps.xml')
-
-    # write merged comps
-    self.comps.add(os.path.join(self.basedir, 'comps.xml'))
-    if not self.comps.has_group('eucalyptus-cloud-controller'):
-        raise Exception, "eucalyptus-cloud-controller not found in comps"
-    open(compsfile, 'w').write(self.comps.xml())
-
     self.logger.info("Creating repodata")
     retcode = subprocess.call(['createrepo', '-u', 'media://' + self.datestamp, '-o', self.imgdir,
                      '-g', compsfile, 
