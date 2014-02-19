@@ -102,18 +102,6 @@ class FrontendInstallWindow (InstallWindow, FrontendWindow):
             bridgeifcfg.set(("ONBOOT", "yes"))
 
             if self.colocated_nc:
-                ncbridge = self.xml.get_widget('ncbridge').get_text()
-
-                bridgeifcfg.set(("BOOTPROTO", "static"))
-                bridgeifcfg.set(("IPADDR", ncbridge))
-                # I don't think there's any need for more than one IP here
-                bridgeifcfg.set(("NETMASK", "255.255.255.255"))
-            elif netmode == "MANAGED":
-                # connect the private interface to a bridge
-                # XXX: this breaks network installs!
-                privifcfg.set(("BRIDGE", "br0"))
-                privifcfg.set(("NM_CONTROLLED", "no"))
-
                 for attr in [ "BOOTPROTO", "IPADDR", "NETMASK" ]:  
                     value = privifcfg.get(attr)
                     bridgeifcfg.set((attr, value))
