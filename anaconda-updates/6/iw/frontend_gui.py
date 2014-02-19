@@ -88,7 +88,7 @@ class FrontendInstallWindow (InstallWindow, FrontendWindow):
         netmode = "MANAGED-NOVLAN"
 
         errors = []
-        pubifcfg = anaconda.id.network.netdevices[euca_conf['VNET_PUBINTERFACE']]
+        pubifcfg = network.NetworkDevice(network.netscriptsDir,euca_conf['VNET_PUBINTERFACE'])
         bridgeifcfg = network.NetworkDevice(network.netscriptsDir, "br0")
         if not self.colocated_nc:
             pubifcfg.set(("NOZEROCONF", "true"))
