@@ -88,10 +88,10 @@ class FrontendInstallWindow (InstallWindow, FrontendWindow):
         netmode = "MANAGED-NOVLAN"
 
         errors = []
-        privifcfg = anaconda.id.network.netdevices[euca_conf['VNET_PUBINTERFACE']]
+        pubifcfg = anaconda.id.network.netdevices[euca_conf['VNET_PUBINTERFACE']]
         bridgeifcfg = network.NetworkDevice(network.netscriptsDir, "br0")
         if not self.colocated_nc:
-            privifcfg.set(("NOZEROCONF", "true"))
+            pubifcfg.set(("NOZEROCONF", "true"))
 
         if self.colocated_nc or netmode == "MANAGED":
             bridgeifcfg.set(("TYPE", "Bridge"))
@@ -102,15 +102,15 @@ class FrontendInstallWindow (InstallWindow, FrontendWindow):
 
             if self.colocated_nc:
                 for attr in [ "BOOTPROTO", "IPADDR", "NETMASK" ]:  
-                    value = privifcfg.get(attr)
+                    value = pubifcfg.get(attr)
                     bridgeifcfg.set((attr, value))
-                    privifcfg.unset(attr)
+                    pubifcfg.unset(attr)
 
             anaconda.id.network.netdevices["br0"] = bridgeifcfg
             bridgeifcfg.write()
+            pubifcfg.set("BRIDGE", "br0")
 
-        if not self.colocated_nc:
-            privifcfg.write()
+        pubifcfg.write()
         
         euca_conf.save()
 
